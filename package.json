@@ -1,11 +1,16 @@
 {
-    "name": "katharos-router",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "test": "node index.js"
-    },
-    "author": "",
-    "license": "ISC"
-  }
+  "name": "katharos-router",
+  "version": "1.0.0",
+  "description": "katharos router",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cnsdetroit/katharos-router.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
