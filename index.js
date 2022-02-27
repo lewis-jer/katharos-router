@@ -4,11 +4,11 @@ const authPoint = async function () {
   });
 };
 
-const getEndpoint = async function (currPage, pageName) {
-  var currPageInfo = pageActions.gatherPageInfo(currPage);
-  var pageInfo = pageActions.gatherPageInfo(pageName);
-  var loginPageInfo = pageActions.gatherPageInfo("login");
-  var errorPageInfo = pageActions.gatherPageInfo("404");
+const getEndpoint = async function (_api, currPage, pageName) {
+  var currPageInfo = _api.gatherPageInfo(currPage);
+  var pageInfo = _api.gatherPageInfo(pageName);
+  var loginPageInfo = _api.gatherPageInfo("login");
+  var errorPageInfo = _api.gatherPageInfo("404");
   let userAuth = await authPoint();
 
   if (localStorage.getItem("user") == null) {
