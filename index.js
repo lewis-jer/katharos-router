@@ -1,3 +1,10 @@
+import { System } from './class';
+
+const system = new System({
+  name: 'system-reserved'
+});
+
+
 const authPoint = async function () {
   return await authService(1).then((res) => {
     return res;
