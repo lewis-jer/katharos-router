@@ -4,6 +4,7 @@ const system = new System({
   name: 'system-reserved'
 });
 
+console.log(system)
 
 const authPoint = async function () {
   return await authService(1).then((res) => {
