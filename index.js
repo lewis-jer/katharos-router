@@ -32,10 +32,9 @@ const getEndpoint = async function (_api, currPage, pageName) {
 
   if (excludes.includes(pageName)) {
     return {
-      route: "404",
-      routeInformation: errorPageInfo,
-      sourceRouteInformation:
-        typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
+      route: pageName,
+      routeInformation: pageInfo,
+      sourceRouteInformation: currPageInfo,
       authentication: userAuth,
     };
   }
