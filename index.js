@@ -1,10 +1,10 @@
-import { System } from './class';
+import { System } from "./class";
 
 const system = new System({
-  name: 'system-reserved'
+  name: "system-reserved",
 });
 
-console.log(system)
+console.log(system);
 
 const authPoint = async function () {
   return await authService(1).then((res) => {
@@ -18,6 +18,27 @@ const getEndpoint = async function (_api, currPage, pageName) {
   var loginPageInfo = _api.gatherPageInfo("login");
   var errorPageInfo = _api.gatherPageInfo("404");
   let userAuth = await authPoint();
+  let excludes = ["eula", "account_verify"];
+
+  if (typeof pageInfo == "undefined") {
+    return {
+      route: "404",
+      routeInformation: errorPageInfo,
+      sourceRouteInformation:
+        typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
+      authentication: userAuth,
+    };
+  }
+
+  if (excludes.includes(pageName)) {
+    return {
+      route: "404",
+      routeInformation: errorPageInfo,
+      sourceRouteInformation:
+        typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
+      authentication: userAuth,
+    };
+  }
 
   if (localStorage.getItem("user") == null) {
     return {
@@ -34,16 +55,6 @@ const getEndpoint = async function (_api, currPage, pageName) {
       route: "login",
       routeInformation: loginPageInfo,
       sourceRouteInformation: currPageInfo,
-      authentication: userAuth,
-    };
-  }
-
-  if (typeof pageInfo == "undefined") {
-    return {
-      route: "404",
-      routeInformation: errorPageInfo,
-      sourceRouteInformation:
-        typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
       authentication: userAuth,
     };
   }
