@@ -7,9 +7,7 @@ const system = new System({
 console.log(system);
 
 const authPoint = async function () {
-  return await authService(1).then((res) => {
-    return res;
-  });
+  return await authService(1);
 };
 
 const getEndpoint = async function (_api, currPage, pageName) {
@@ -24,8 +22,7 @@ const getEndpoint = async function (_api, currPage, pageName) {
     return {
       route: "404",
       routeInformation: errorPageInfo,
-      sourceRouteInformation:
-        typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
+      sourceRouteInformation: typeof currPageInfo != "undefined" ? currPageInfo : errorPageInfo,
       authentication: userAuth,
     };
   }
