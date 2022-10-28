@@ -4,18 +4,12 @@ const system = new System({
   name: "system-reserved",
 });
 
-console.log(system);
-
-const authPoint = async function () {
-  return await authService(1);
-};
-
 const getEndpoint = async function (_api, currPage, pageName) {
   var currPageInfo = _api.gatherPageInfo(currPage);
   var pageInfo = _api.gatherPageInfo(pageName);
   var loginPageInfo = _api.gatherPageInfo("login");
   var errorPageInfo = _api.gatherPageInfo("404");
-  let userAuth = await authPoint();
+  let userAuth = await _api.system.data.authentication(1);
   let excludes = ["eula", "account_verify", "forgot_password"];
 
   if (typeof pageInfo == "undefined") {
