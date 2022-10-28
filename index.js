@@ -17,6 +17,7 @@ const getEndpoint = async function (_api, currPage, pageName) {
   var errorPageInfo = _api.gatherPageInfo("404");
   let userAuth = await authPoint();
   let excludes = ["eula", "account_verify", "forgot_password"];
+  console.log(userAuth);
 
   if (typeof pageInfo == "undefined") {
     return {
