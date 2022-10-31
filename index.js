@@ -40,7 +40,7 @@ const getEndpoint = async function (_api, currPage, pageName) {
   }
 
   if (localStorage.getItem("user") != null && userAuth.accessToken == false) {
-    store.logout(1);
+    _api.system.logout(1);
     return {
       route: "login",
       routeInformation: loginPageInfo,
