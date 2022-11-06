@@ -1,6 +1,7 @@
 {
   "name": "katharos-router",
   "version": "1.0.17",
+  "type": "module",
   "description": "katharos router",
   "main": "index.js",
   "scripts": {

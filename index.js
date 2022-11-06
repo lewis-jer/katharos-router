@@ -1,4 +1,4 @@
-import { System } from "./class";
+import { System } from "./class.js";
 
 const system = new System({
   name: "system-reserved",
