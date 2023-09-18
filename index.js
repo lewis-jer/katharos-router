@@ -14,8 +14,10 @@ export default class Router {
 
   async get(currPage, pageName) {
     this.current = {};
-    let { accessToken, route, ...rest } = await this.preroute();
-    Object.assign(this.current, { authentication: { accessToken: accessToken, ...rest } });
+    let { accessToken, route, ...rest } = await this.preroute(pageName);
+    let authentication = { accessToken: accessToken, route, ...rest };
+
+    Object.assign(this.current, { authentication: authentication });
 
     try {
       if (this.config['404']) await this.errorroute(pageName);
@@ -25,7 +27,11 @@ export default class Router {
       return this.current;
     }
 
-    Object.assign(this.current, { route: pageName?.endpoint, sourceRouteInformation: currPage, routeInformation: !accessToken ? route : pageName });
+    let routerRoute = !accessToken ? route.endpoint : pageName?.endpoint != route ? route : pageName?.endpoint;
+    let routerRouteInformation = !accessToken ? route : pageName?.endpoint != route ? rest.view : pageName;
+
+    let destination = { route: routerRoute, sourceRouteInformation: currPage, routeInformation: routerRouteInformation };
+    Object.assign(this.current, destination);
     return this.current;
   }
 }
