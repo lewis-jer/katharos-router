@@ -4,6 +4,14 @@ export default class Router {
     this.name = 'katharos-router';
   }
 
+  _SSR_gather(object) {
+    this._SSR_gather = object;
+  }
+
+  authentication(object) {
+    this.authentication = object;
+  }
+
   preRoute(object) {
     this.preroute = object;
   }
@@ -13,24 +21,27 @@ export default class Router {
   }
 
   async get(currPage, pageName) {
+    this.source = currPage;
+    this.destination = pageName;
+
     this.current = {};
-    let { accessToken, route, ...rest } = await this.preroute(pageName);
+    let { accessToken, authenicatedView, sourceView, route, ...rest } = await this.preroute(pageName);
     let authentication = { accessToken: accessToken, route, ...rest };
 
     Object.assign(this.current, { authentication: authentication });
 
     try {
-      if (this.config['404']) await this.errorroute(pageName);
+      if (this.config['404']) await this.errorroute(authenicatedView);
     } catch (e) {
       let erroroute = JSON.parse(e.message);
-      Object.assign(this.current, { route: erroroute?.endpoint, sourceRouteInformation: currPage, routeInformation: erroroute });
+      Object.assign(this.current, { route: erroroute?.endpoint, sourceRouteInformation: sourceView, routeInformation: erroroute });
       return this.current;
     }
 
-    let routerRoute = !accessToken ? route.endpoint : pageName?.endpoint != route ? route : pageName?.endpoint;
-    let routerRouteInformation = !accessToken ? route : pageName?.endpoint != route ? rest.view : pageName;
+    let routerRoute = !accessToken ? route.endpoint : authenicatedView?.endpoint != route ? route : authenicatedView?.endpoint;
+    let routerRouteInformation = !accessToken ? route : authenicatedView?.endpoint != route ? rest.view : authenicatedView;
 
-    let destination = { route: routerRoute, sourceRouteInformation: currPage, routeInformation: routerRouteInformation };
+    let destination = { route: routerRoute, sourceRouteInformation: sourceView, routeInformation: routerRouteInformation };
     Object.assign(this.current, destination);
     return this.current;
   }
