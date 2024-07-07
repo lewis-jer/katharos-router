@@ -45,4 +45,9 @@ export default class Router {
     Object.assign(this.current, destination);
     return this.current;
   }
+
+  use(module) {
+    let __info = module.whoami();
+    this.config[__info.name] = module;
+  }
 }
