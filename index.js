@@ -20,30 +20,8 @@ export default class Router {
     this.errorroute = object;
   }
 
-  async get(currPage, pageName) {
-    this.source = currPage;
-    this.destination = pageName;
-
-    this.current = {};
-    let { accessToken, authenicatedView, sourceView, route, ...rest } = await this.preroute(pageName);
-    let authentication = { accessToken: accessToken, route, ...rest };
-
-    Object.assign(this.current, { authentication: authentication });
-
-    try {
-      if (this.config['404']) await this.errorroute(authenicatedView);
-    } catch (e) {
-      let erroroute = JSON.parse(e.message);
-      Object.assign(this.current, { route: erroroute?.endpoint, sourceRouteInformation: sourceView, routeInformation: erroroute });
-      return this.current;
-    }
-
-    let routerRoute = !accessToken ? route.endpoint : authenicatedView?.endpoint != route ? route : authenicatedView?.endpoint;
-    let routerRouteInformation = !accessToken ? route : authenicatedView?.endpoint != route ? rest.view : authenicatedView;
-
-    let destination = { route: routerRoute, sourceRouteInformation: sourceView, routeInformation: routerRouteInformation };
-    Object.assign(this.current, destination);
-    return this.current;
+  async get(object) {
+    this.get = object;
   }
 
   use(module) {
